@@ -1,0 +1,15 @@
+[package]
+name = "cli"
+version = "0.1.0"
+edition = "2021"
+authors = ["Sachin Iyer <si2073@nyu.edu>"]
+description = "This is a cli to run ansible playbooks for the mediastorage project"
+readme = "README.md"
+repository = "https://dev.hsrn.nyu.edu/hsrn-projects/mediastorage/"
+license = "MIT"
+
+[dependencies]
+clap = { version = "4.2.4", features = ["derive"] }
+dotenv = "0.15.0"
+serde = { version = "1.0.160", features = ["derive"] }
+serde_yaml = "0.9.21"

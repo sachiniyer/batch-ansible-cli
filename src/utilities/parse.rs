@@ -64,14 +64,19 @@ pub fn unwrap_envs(path: &PathBuf) -> Result<Vec<String>, Box<dyn std::error::Er
     let output = value.as_mapping().unwrap().values();
     let mut result = Vec::new();
     for i in output {
-        let start = i.as_str().unwrap().find("{{").unwrap() + 2;
-        let end = i.as_str().unwrap().find("}}").unwrap();
-        let mut var = i.as_str().unwrap().get(start..end).unwrap();
-        if var.contains("default") {
-            var = var.get(0..var.find("|").unwrap()).unwrap();
+        let istr_res = i.as_str();
+        match istr_res {
+            Some(istr) => {
+                if istr.contains("{{") && istr.contains("}}") {
+                    let start = istr.find("{{").unwrap() + 2;
+                    let end = istr.find("}}").unwrap();
+                    let mut var = i.as_str().unwrap().get(start..end).unwrap();
+                    var = var.trim();
+                    result.push(var.to_string());
+                }
+            }
+            None => {}
         }
-        var = var.trim();
-        result.push(var.to_string());
     }
     Ok(result)
 }
